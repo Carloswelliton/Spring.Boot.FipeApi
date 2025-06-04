@@ -4,9 +4,7 @@ import spring.boot.fipe.models.Vehicle;
 import spring.boot.fipe.service.ApiConsume;
 import spring.boot.fipe.service.DataConverter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Principal {
   private Scanner readLine = new Scanner(System.in);
@@ -44,21 +42,10 @@ public class Principal {
     System.out.println(address);
     var json = consume.ApiCall(address);
     System.out.println(json);
-    Vehicle vehicles = conversor.ApiCall(json, Vehicle.class);
-    System.out.println(vehicles);
 
-
-
-
-
-
-
-
-
-
-
-
-
+    var marcas = conversor.getList(json, Vehicle.class);
+    marcas.stream()
+        .sorted(Comparator.comparing(Vehicle::codigo))
+        .forEach(System.out::println);
   }
-
 }
